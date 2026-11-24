@@ -20,6 +20,7 @@ export const swaggerSpec = {
     { name: 'Pengaturan' },
     { name: 'Laporan AI' },
     { name: 'Saran' },
+    { name: 'Akun' },
   ],
   components: {
     securitySchemes: {
@@ -130,6 +131,30 @@ export const swaggerSpec = {
           200: { description: 'Berhasil', ...json({ type: 'object', properties: { token: { type: 'string' } } }) },
           401: fail('Email atau password salah'),
           422: fail('Email atau password tidak diisi'),
+          429: fail('Terlalu banyak percobaan'),
+        },
+      },
+    },
+    '/me/password': {
+      patch: {
+        tags: ['Akun'],
+        summary: 'Ganti password akun yang sedang login',
+        security: LOGIN,
+        requestBody: {
+          required: true,
+          ...json({
+            type: 'object',
+            required: ['current_password', 'new_password'],
+            properties: {
+              current_password: { type: 'string', format: 'password' },
+              new_password: { type: 'string', format: 'password', minLength: 8, maxLength: 72 },
+            },
+          }),
+        },
+        responses: {
+          200: { description: 'Berhasil', ...json(ref('Message')) },
+          401: fail('Belum login'),
+          422: fail('Isian tidak valid atau password lama salah'),
           429: fail('Terlalu banyak percobaan'),
         },
       },

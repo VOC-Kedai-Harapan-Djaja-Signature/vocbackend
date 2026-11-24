@@ -18,3 +18,19 @@ export async function createIfMissing({ name, email, password, role }) {
   );
   return rowCount === 1;
 }
+
+export async function findById(id) {
+  const { rows } = await pool.query(
+    'SELECT id, name, email, password, role FROM users WHERE id = $1',
+    [id],
+  );
+  return rows[0] || null;
+}
+
+export async function updatePassword(id, passwordHash) {
+  const { rowCount } = await pool.query(
+    'UPDATE users SET password = $2 WHERE id = $1',
+    [id, passwordHash],
+  );
+  return rowCount === 1;
+}
