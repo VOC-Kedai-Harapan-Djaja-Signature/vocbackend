@@ -1,0 +1,22 @@
+# Dependensi Python untuk AI VoC (dipakai bridge + laporan).
+# Dipasang sekali di venv hosting / laptop:
+#   python -m venv venv
+#   venv/Scripts/python.exe -m pip install -r requirements.txt   (Windows)
+#   venv/bin/python -m pip install -r requirements.txt           (Linux)
+scikit-learn==1.6.1
+joblib
+shap==0.54.1
+openai
+numpy
+requests
+# PENTING (perbaikan bug 21 Nov 2026): `requests` WAJIB ada.
+# Panggilan LLM ke OpenRouter/OrcaRouter di voc_pipeline.py memakai
+# library `requests`. Tanpa baris ini, venv baru gagal dengan
+# "No module named 'requests'" dan saran LLM di laporan kosong,
+# padahal klasifikasi + SHAP tetap jalan. Jangan hapus baris ini.
+#
+# fastapi + uvicorn TIDAK diperlukan untuk integrasi Express + bridge.
+# Keduanya hanya dipakai kalau menjalankan arsip/laporan_api.py
+# (FastAPI standalone lama). Kalau mau menjalankannya, tambahkan:
+#   fastapi
+#   uvicorn

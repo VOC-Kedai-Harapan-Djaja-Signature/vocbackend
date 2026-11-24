@@ -1,0 +1,7 @@
+node_modules
+.env
+.git
+python/venv
+python/__pycache__
+*.dbml
+*.log
