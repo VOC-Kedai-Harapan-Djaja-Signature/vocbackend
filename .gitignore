@@ -2,3 +2,7 @@ node_modules/
 .env
 python/__pycache__/
 python/venv/
+*.log
+*.dbml
+struktur-db.sql
+lengkapi-database.sql
